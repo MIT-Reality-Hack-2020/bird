@@ -9,11 +9,13 @@ public class FadeCamera : MonoBehaviour
     private Texture2D _texture;
     private bool _done;
     private float _time;
+    private bool _black;
 
     public GameObject fadeObj;
  
     public void Reset()
     {
+        _black = false;
         _done = false;
         _alpha = 1;
         _time = 0;
@@ -24,21 +26,24 @@ public class FadeCamera : MonoBehaviour
     {
         Reset();
     }
+
+    public void SetToBlack() {
+        _black = true;
+    }
  
     public void OnGUI()
     {
-        // if (_done) return;
-        // if (_texture == null) _texture = new Texture2D(1, 1);
- 
-        // _texture.SetPixel(0, 0, new Color(0, 0, 0, _alpha));
-        // _texture.Apply();
  
         _time += Time.deltaTime;
         _alpha = FadeCurve.Evaluate(_time);
+
+        if (_black) {
+            _alpha = 1;
+        }
+
         var col = fadeObj.GetComponent<Renderer> ().material.color;
         col.a = _alpha;
         fadeObj.GetComponent<Renderer> ().material.color = col;
-        // GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), _texture);
  
         if (_alpha <= 0) _done = true;
     }

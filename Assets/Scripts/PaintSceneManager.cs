@@ -12,6 +12,7 @@ public class PaintSceneManager : MonoBehaviour
     void Start()
     {
         HandleHMDMounted();
+        fadeCamera.SetToBlack();
     }
     // Update is called once per frame
     void Update()
@@ -41,5 +42,6 @@ public class PaintSceneManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         trailManager.ResetTrailList();
+        fadeCamera.SetToBlack();
     }
 }
